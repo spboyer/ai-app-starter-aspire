@@ -1,0 +1,16 @@
+{
+  "name": "node-fortune-aspire-setup",
+  "version": "1.0.0",
+  "description": "Root package.json for bootstrapping the Node.js applications",
+  "scripts": {
+    "bootstrap": "npm run bootstrap:api && npm run bootstrap:spa && npm run bootstrap:launcher",
+    "bootstrap:api": "cd NodeFortuneApi && npm install",
+    "bootstrap:spa": "cd NodeFortuneSpa && npm install",
+    "bootstrap:launcher": "cd aspire-nodejs-launcher && npm install",
+    "build:api": "cd NodeFortuneApi && npm run build",
+    "build:spa": "cd NodeFortuneSpa && npm run build",
+    "build": "npm run build:api && npm run build:spa",
+    "setup-db": "cd NodeFortuneApi && npm run setup-db",
+    "start": "cd aspire-nodejs-launcher && node launch.js ../NodeFortuneApi start"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "aspire-nodejs-launcher",
+  "version": "1.0.0",
+  "description": "A launcher for Node.js apps in .NET Aspire",
+  "main": "launch.js",
+  "scripts": {
+    "start": "node launch.js",
+    "ensure-db": "node ensure-db.js",
+    "debug-env": "node debug-env.js",
+    "api": "cd ../NodeFortuneApi && npm run dev",
+    "spa": "cd ../NodeFortuneSpa && npm run dev",
+    "dev": "npm run ensure-db && npm-run-all --parallel api spa",
+    "bootstrap": "npm install && cd ../NodeFortuneApi && npm install && cd ../NodeFortuneSpa && npm install",
+    "setup-db": "cd ../NodeFortuneApi && npm run setup-db"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
