@@ -9,6 +9,11 @@ This project demonstrates how to use .NET Aspire to orchestrate Node.js applicat
 - **aspire-nodejs-launcher**: Helper scripts for launching Node.js apps from .NET Aspire
 - **ai-app-starter-aspire.AppHost**: The .NET Aspire orchestration project
 
+## Documentation
+
+- [Node.js + .NET Aspire Integration Guide](NODE_ASPIRE_INTEGRATION.md) - Detailed explanation of the integration
+- [Troubleshooting Guide](TROUBLESHOOTING.md) - Solutions for common issues
+
 ## Prerequisites
 
 - .NET 8 SDK (includes .NET Aspire)
