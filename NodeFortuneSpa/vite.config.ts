@@ -1,3 +1,8 @@
+// Import fixed HTTP/2 compatible tracing implementation
+import './tracing-http2-fixed.js';
+// Import Vite-compatible OpenTelemetry setup
+// This uses dynamic imports to avoid Vite processing Node.js specific modules
+import './vite-otel-compat.js';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -35,3 +40,10 @@ export default defineConfig({
     }
   }
 });
+
+
+
+
+
+
+

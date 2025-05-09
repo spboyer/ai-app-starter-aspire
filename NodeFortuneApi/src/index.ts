@@ -1,6 +1,11 @@
+// Initialize OpenTelemetry - this should be the first import
+// Use the enhanced HTTP/2 implementation
+import './tracing-resilient';
+
 import express from 'express';
 import cors from 'cors';
 import db from './db';
+import { traceApiRequest, traceDatabaseOperation } from './tracing-helpers';
 
 const app = express();
 // Use environment variable for port, which will be set by Aspire
@@ -16,16 +21,19 @@ app.use(cors({
 
 // API endpoint for random fortunes - both with /api prefix and without
 // This allows direct access and access through the proxy
-app.get('/api/fortunes/random', getRandomFortune);
-app.get('/fortunes/random', getRandomFortune);
+app.get('/api/fortunes/random', traceApiRequest('/api/fortunes/random', getRandomFortune));
+app.get('/fortunes/random', traceApiRequest('/fortunes/random', getRandomFortune));
 
 // Function to get a random fortune
 async function getRandomFortune(_req: express.Request, res: express.Response) {
   try {
-    // Get a random fortune from the database
-    const fortune = await db<{ id: number; text: string }>('fortunes')
-      .orderByRaw('RANDOM()')
-      .first();
+    // Get a random fortune from the database with tracing
+    const fortune = await traceDatabaseOperation('get_random_fortune', async () => {
+      return await db<{ id: number; text: string }>('fortunes')
+        .orderByRaw('RANDOM()')
+        .first();
+    });
+    
     if (!fortune) return res.status(404).json({ error: 'No fortunes found.' });
     res.json(fortune);
   } catch (err) {
@@ -35,14 +43,14 @@ async function getRandomFortune(_req: express.Request, res: express.Response) {
 }
 
 // Handle requests to /api root path - needed for Aspire service discovery testing
-app.get('/api', (_req, res) => {
+app.get('/api', traceApiRequest('/api', async (_req, res) => {
   res.status(200).json({ message: 'Fortune API is running' });
-});
+}));
 
 // Health check endpoint for Aspire
-app.get('/health', (_req, res) => {
+app.get('/health', traceApiRequest('/health', async (_req, res) => {
   res.status(200).json({ status: 'healthy' });
-});
+}));
 
 // Root path for checking if the API is running
 app.get('/', (_req, res) => {
@@ -80,3 +88,10 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log('  No Aspire service bindings found');
   }
 });
+
+
+
+
+
+
+

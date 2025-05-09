@@ -12,6 +12,7 @@ This project demonstrates how to use .NET Aspire to orchestrate Node.js applicat
 ## Documentation
 
 - [Node.js + .NET Aspire Integration Guide](NODE_ASPIRE_INTEGRATION.md) - Detailed explanation of the integration
+- [OpenTelemetry Integration Guide](OPENTELEMETRY.md) - How OpenTelemetry is integrated with Aspire
 - [Troubleshooting Guide](TROUBLESHOOTING.md) - Solutions for common issues
 
 ## Prerequisites

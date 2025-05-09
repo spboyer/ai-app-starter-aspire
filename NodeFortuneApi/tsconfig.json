@@ -8,7 +8,10 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./src"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  },  "include": ["src/**/*"],  "exclude": [
+    "node_modules",
+    "src/tracing.ts",
+    "src/tracing-simple.ts",
+    "src/tracing-minimal.ts"
+  ]
 }
