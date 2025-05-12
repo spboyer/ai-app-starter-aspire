@@ -11,11 +11,15 @@ Object.keys(process.env)
 const apiUrl = process.env.services__fortuneapi__http || 'http://localhost:4000';
 console.log(`\nAPI URL from environment: ${apiUrl}`);
 
+// Get OTEL endpoint from Aspire environment variables or default
+const otelEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318';
+console.log(`\nOTEL endpoint from environment: ${otelEndpoint}`);
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()],  
   server: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 3000, // Use fixed port 3000
     strictPort: true, // Fail if port is already in use
     // In development, proxy API requests to the backend
     proxy: { 
@@ -33,5 +37,10 @@ export default defineConfig({
         }
       }
     }
+  },
+  // Define environment variables to pass to the client
+  define: {
+    // Use JSON.stringify to properly encode string values
+    'import.meta.env.VITE_OTEL_EXPORTER_OTLP_ENDPOINT': JSON.stringify(otelEndpoint)
   }
 });

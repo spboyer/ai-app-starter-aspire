@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System;
+using Aspire.Extensions.NodeJs;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -43,7 +44,8 @@ Console.WriteLine($"API Path: {apiPath}");
 var fortuneApi = builder.AddNpmApp("fortuneapi", apiPath, "start")
     .WithHttpEndpoint(targetPort: 4000, name: "http")
     .WithEnvironment("PORT", "4000")
-    .WithEnvironment("NODE_ENV", builder.Environment.IsDevelopment() ? "development" : "production");
+    .WithEnvironment("NODE_ENV", builder.Environment.IsDevelopment() ? "development" : "production")
+    .WithNodeTelemetry("fortune-api");
 
 // Add the React frontend using the correct syntax from the docs
 // Provide the full absolute path to the project
@@ -55,6 +57,7 @@ var fortuneSpa = builder.AddNpmApp("fortunespa", spaPath, "start")
     .WithEnvironment("BROWSER", "none")
     .WithEnvironment("services__fortuneapi__http", fortuneApi.GetEndpoint("http"))
     .WithEnvironment("NODE_ENV", builder.Environment.IsDevelopment() ? "development" : "production")
+    .WithNodeTelemetry("fortune-spa")
     .WithReference(fortuneApi);
 
 // Log that we're building the application

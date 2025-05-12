@@ -1,0 +1,64 @@
+# OpenTelemetry Configuration for Aspire
+# This file sets up environment variables for OpenTelemetry
+
+# The value is automatically set by the NodeJsExtensions.WithNodeTelemetry method
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:21035
+
+# Exporter configuration
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=http/protobuf
+
+# SSL/TLS configuration - disable certificate validation for self-signed certs
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+# Service details
+OTEL_SERVICE_NAME=node-fortune-api
+OTEL_RESOURCE_ATTRIBUTES=service.name=node-fortune-api,service.namespace=aspire,deployment.environment=development
+
+# Instrumentation settings
+OTEL_TRACES_SAMPLER=always_on
+OTEL_TRACES_SAMPLER_ARG=1.0
+OTEL_PROPAGATORS=tracecontext,baggage
+
+# Zero-code instrumentation settings
+OTEL_NODE_RESOURCE_DETECTORS=env,host,os,process,container
+OTEL_TRACES_EXPORTER=otlp
+OTEL_METRICS_EXPORTER=otlp
+OTEL_LOGS_EXPORTER=otlp
+
+# Enable debug logging for troubleshooting
+OTEL_DEBUG=true
+OTEL_LOG_LEVEL=debug
+OTEL_BSP_MAX_QUEUE_SIZE=2048
+
+# Alternative OTLP endpoints to try if the primary one fails
+# These will be checked if the main endpoint is unreachable
+# OTEL_ALTERNATIVE_ENDPOINTS=http://host.docker.internal:4318,http://aspire-dashboard:4318
+
+# Fallback strategy for OTLP connection issues
+# Possible values:
+# - none: Keep trying to use OTLP exporters even if connection fails
+# - console: Switch to console exporters for local development/debugging
+# - mixed: Use both OTLP and console exporters for redundancy
+OTLP_FALLBACK_MODE=console
+
+# Reconnection behavior settings
+# Setting this to false prevents auto-reconnection to OTLP when it becomes available
+OTLP_AUTO_RECONNECT=true
+# How often to check if the OTLP endpoint is available (in milliseconds)
+OTLP_RECONNECT_INTERVAL=30000
+# Set to true to stop checking for OTLP endpoint availability
+OTLP_CHECK_RECONNECT=true
+# Set to true to see all OTLP connection error messages
+SHOW_OTLP_ERRORS=true
+
+OTLP_ALTERNATIVE_ENDPOINTS=http://localhost:19888,http://localhost:18888,http://localhost:4318,http://127.0.0.1:19888
+
+
+
+
+
+
+

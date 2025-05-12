@@ -1,0 +1,20 @@
+# OpenTelemetry Configuration for Aspire
+# This file sets up environment variables for OpenTelemetry
+
+# Exporter configuration
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=http/protobuf
+
+# Service details
+OTEL_SERVICE_NAME=fortune-spa
+OTEL_RESOURCE_ATTRIBUTES=service.name=fortune-spa,service.namespace=aspire,deployment.environment=production
+
+# Instrumentation settings
+OTEL_TRACES_SAMPLER=parentbased_always_on
+OTEL_TRACES_SAMPLER_ARG=1.0
+OTEL_PROPAGATORS=tracecontext,baggage
+
+# Enable debug logging in development
+OTEL_LOG_LEVEL=info

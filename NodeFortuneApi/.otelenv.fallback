@@ -1,0 +1,40 @@
+# OpenTelemetry Fallback Configuration
+# This configuration allows for graceful degradation when OTLP connectivity fails
+
+# Use the console exporter by default, since OTLP is not working
+OTEL_TRACES_EXPORTER=console
+OTEL_METRICS_EXPORTER=console
+OTEL_LOGS_EXPORTER=console
+
+# Keep the OTLP protocol configuration for future use
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=http/protobuf
+
+# Set multiple possible endpoints to try
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:16090
+OTLP_ALTERNATIVE_ENDPOINTS=http://localhost:16090,http://localhost:21035,http://localhost:4318,http://127.0.0.1:16090
+
+# Service configuration
+OTEL_SERVICE_NAME=node-fortune-api
+OTEL_RESOURCE_ATTRIBUTES=service.name=node-fortune-api,service.namespace=aspire,deployment.environment=development
+
+# Enable debugging to see what's happening
+OTEL_DEBUG=true
+OTEL_LOG_LEVEL=debug
+
+# Disable batch processing for immediate export
+OTEL_BSP_SCHEDULE_DELAY=500
+OTEL_BSP_MAX_EXPORT_BATCH_SIZE=512
+OTEL_BSP_MAX_QUEUE_SIZE=2048
+
+# Fallback configuration
+OTLP_FALLBACK_MODE=console
+OTLP_AUTO_RECONNECT=true
+OTLP_RECONNECT_INTERVAL=30000
+OTLP_CHECK_RECONNECT=true
+SHOW_OTLP_ERRORS=true
+
+# Use console exporters explicitly
+USE_CONSOLE_EXPORTERS=true
