@@ -1,5 +1,5 @@
 # NodeFortuneApi OpenTelemetry + Aspire Integration
-
+- FAILED ATTEMPT 2
 ## Overview of the Fix
 
 We've implemented a robust solution to address the OpenTelemetry (OTLP) connectivity issues in the Node.js application running within an Aspire solution.
